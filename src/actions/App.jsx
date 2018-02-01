@@ -7,8 +7,11 @@ import { ActionTypes } from '../constants/ActionTypes';
 const createFetchedStatus = createAction(ActionTypes.FETCHED_STATUS);
 const createFetchedQueue = createAction(ActionTypes.FETCHED_QUEUE);
 
+const serverUrl = 'http://192.168.2.19:4567';
+
 export function fetchStatus() {
-  const url = 'http://192.168.1.68:4567/status/';
+  const url = `${serverUrl}/status/`;
+
   return (dispatch) => {
     axios.get(url).then((resp) => {
       dispatch(createFetchedStatus({
@@ -24,26 +27,28 @@ export function fetchStatus() {
         time: resp.data.time
       }));
     }).catch((err) => {
-      console.log("failed to fetch status");
+      console.log("failed to fetch status", err);
     });
   };
 }
 
 export function fetchQueue() {
-  const url = 'http://192.168.1.68:4567/queue/';
+  const url = `${serverUrl}/queue/`;
+
   return (dispatch) => {
     axios.get(url).then((resp) => {
       dispatch(createFetchedQueue({
         queue: resp.data
       }));
     }).catch((err) => {
-      console.log("failed to fetch queue");
+      console.log("failed to fetch queue", err);
     });
   };
 }
 
 export function updateStatus(payload) {
-  const url = 'http://192.168.1.68:4567/status/';
+  const url = `${serverUrl}/status/`;
+
   return (dispatch) => {
     axios.put(url, payload).then((resp) => {
       dispatch(createFetchedStatus({
@@ -59,7 +64,7 @@ export function updateStatus(payload) {
         time: resp.data.time
       }));
     }).catch((err) => {
-      console.log("failed to udpate status");
+      console.log("failed to udpate status", err);
     });
   };
 }

@@ -6,7 +6,7 @@ import { Button, Glyphicon, ButtonToolbar, ProgressBar, Label, Panel } from 'rea
 class Controls extends React.Component {
   constructor(props) {
     super(props);
-    _.bindAll(this, 
+    _.bindAll(this,
       'play', 'pause', 'togglePlay', 'trackElapsed',
       'trackLength', 'next', 'previous'
     );
@@ -53,8 +53,11 @@ class Controls extends React.Component {
     return "--:--"
   }
   trackProgress() {
-    // eslint-disable-next-line
-    return parseInt((this.props.time[0] / this.props.time[1]) * 100);
+    if(this.props.state !== 'stop' && this.props.time) {
+      // eslint-disable-next-line
+      return parseInt((this.props.time[0] / this.props.time[1]) * 100);
+    }
+    return 0;
   }
   render() {
     if(this.props.state === 'play') {
@@ -76,7 +79,7 @@ class Controls extends React.Component {
                   <Label>{this.props.currentSong ? this.props.currentSong.date : ''}</Label><br/>
                 </Panel>
               </Col>
-          </Row>  
+          </Row>
         </Col>
         <Col xs={6}>
           <Panel header="Controls">
